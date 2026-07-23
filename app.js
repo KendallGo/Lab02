@@ -37,7 +37,9 @@ async function fetchWithResilience(endpoint, attempt = 1) {
             const data = rawData[keyName] || rawData; 
             
             localStorage.setItem(`cache_${endpoint}`, JSON.stringify(data));
-            document.getElementById('offline-indicator').classList.add('hidden');
+            if (navigator.onLine) {
+                document.getElementById('offline-indicator').classList.add('hidden');
+            }
             return data;
         }
 
@@ -522,3 +524,16 @@ document.getElementById('btn-reauth').addEventListener('click', async () => {
 
 // Inicializar la primera vista
 initTour();
+
+// Listeners globales para estado de conexión
+window.addEventListener('offline', () => {
+    document.getElementById('offline-indicator').classList.remove('hidden');
+});
+window.addEventListener('online', () => {
+    document.getElementById('offline-indicator').classList.add('hidden');
+});
+
+// Comprobar estado inicial al cargar o cambiar pestañas si ya estaba offline
+if (!navigator.onLine) {
+    document.getElementById('offline-indicator').classList.remove('hidden');
+}
