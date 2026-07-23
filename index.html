@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Mundial 2026 - Lab B</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <h1>Mundial 2026 - Sistema Avanzado</h1>
+        <div class="status-badges">
+            <div id="offline-indicator" class="badge bg-warning hidden">⚠️ Modo Offline</div>
+            <div id="countdown-indicator" class="badge bg-danger hidden">Reintentando en <span id="countdown-seconds">0</span>s...</div>
+        </div>
+    </header>
+
+    <div class="app-layout">
+        <!-- Navegación por Pestañas -->
+        <aside class="sidebar">
+            <nav id="nav-tabs" class="tabs-list">
+                <button class="tab-btn active" data-target="view-tour">Tour Virtual de Sedes</button>
+                <button class="tab-btn" data-target="view-agenda">Agenda Simultánea</button>
+                <button class="tab-btn" data-target="view-timeline">Timeline Infinito</button>
+                <button class="tab-btn" data-target="view-dashboard">Dashboard Fanático</button>
+                <button class="tab-btn" data-target="view-matriz">Matriz de Grupos</button>
+            </nav>
+        </aside>
+
+        <!-- Contenedores de Vistas -->
+        <main class="main-content">
+            
+            <!-- 2.1 Tour Virtual -->
+            <section id="view-tour" class="view-section active">
+                <h2>Tour de Sedes</h2>
+                <div id="stadiums-container" class="grid-layout"></div>
+                <div id="games-section" class="mt-large">
+                    <h3>Partidos de la Sede</h3>
+                    <div id="games-container" class="list-layout">
+                        <p class="text-muted">Selecciona una sede.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2.2 Agenda Simultánea -->
+            <section id="view-agenda" class="view-section hidden">
+                <h2>Agenda Simultánea</h2>
+                <div class="agenda-controls">
+                    <button id="btn-prev-date" class="btn btn-outline">Anterior</button>
+                    <h3 id="agenda-current-date">Cargando...</h3>
+                    <button id="btn-next-date" class="btn btn-outline">Siguiente</button>
+                </div>
+                <div id="agenda-container" class="agenda-layout mt-large"></div>
+            </section>
+
+            <!-- 2.3 Timeline Infinito -->
+            <section id="view-timeline" class="view-section hidden">
+                <h2>Timeline de Partidos</h2>
+                <div id="timeline-container" class="list-layout"></div>
+                <div id="timeline-sentinel" class="sentinel">
+                    <!-- Observador de intersección -->
+                </div>
+                <div id="timeline-error" class="hidden text-center mt-large">
+                    <button id="btn-retry-timeline" class="btn btn-danger">Reintentar Carga</button>
+                </div>
+            </section>
+
+            <!-- 2.4 Dashboard Fanático -->
+            <section id="view-dashboard" class="view-section hidden">
+                <h2>Dashboard de Selección</h2>
+                <div class="filter-bar">
+                    <select id="team-selector" class="select-input">
+                        <option value="">Selecciona tu equipo...</option>
+                    </select>
+                </div>
+                
+                <div id="dash-team-info" class="hidden mt-large" style="display: flex; align-items: center; gap: 1.5rem; background: var(--surface); padding: 1.5rem; border-radius: 1rem; border-left: 4px solid var(--theme-color);">
+                    <img id="dash-team-flag" src="" alt="Bandera" style="width: 80px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+                    <h2 id="dash-team-name" style="font-size: 2rem; margin: 0;">-</h2>
+                </div>
+
+                <div class="dashboard-stats grid-layout mt-large">
+                    <div class="card theme-card"><h3>Posición</h3><p id="dash-pos" class="stat-text">-</p></div>
+                    <div class="card theme-card"><h3>Puntos</h3><p id="dash-pts" class="stat-text">-</p></div>
+                    <div class="card theme-card"><h3>Goles a Favor</h3><p id="dash-gf" class="stat-text">-</p></div>
+                </div>
+                <h3 class="mt-large">Partidos del Equipo</h3>
+                <div id="dash-games-container" class="list-layout"></div>
+            </section>
+
+            <!-- 2.5 Matriz de Enfrentamientos -->
+            <section id="view-matriz" class="view-section hidden">
+                <h2>Matriz por Grupos</h2>
+                <div id="matriz-container" class="list-layout"></div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Modal 401 -->
+    <div id="auth-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Sesión Expirada (401)</h2>
+            <button id="btn-reauth" class="btn">Reautenticarse</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
