@@ -186,7 +186,10 @@ async function renderAgendaDate(grouped, teams) {
         const away = tAway?.name_en || 'TBD';
         const flagH = tHome?.flag ? `<img src="${tHome.flag}" class="flag-icon" alt="">` : '';
         const flagA = tAway?.flag ? `<img src="${tAway.flag}" class="flag-icon" alt="">` : '';
-        container.insertAdjacentHTML('beforeend', `<div class="card no-hover"><h3 class="team-name">${home} ${flagH} vs ${flagA} ${away}</h3><p class="text-muted">Horario: ${g.local_time || 'TBD'}</p></div>`);
+        const subtitle = (g.finished === "TRUE" || g.home_score !== null) 
+            ? `Resultado: ${g.home_score} - ${g.away_score}` 
+            : `Pendiente`;
+        container.insertAdjacentHTML('beforeend', `<div class="card no-hover"><h3 class="team-name">${home} ${flagH} vs ${flagA} ${away}</h3><p class="text-muted">${subtitle}</p></div>`);
     });
 }
 
